@@ -1,0 +1,43 @@
+{
+  "name": "@ardf/mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for ARDF - Give Claude access to 100+ APIs through semantic search",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "ardf-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "claude",
+    "ai",
+    "agent",
+    "api",
+    "semantic-search",
+    "ardf",
+    "model-context-protocol"
+  ],
+  "author": "ARDF",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/ardf-mcp-server.git"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
