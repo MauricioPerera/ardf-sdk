@@ -40,13 +40,13 @@ Claude: "I found Resend Email API - it's perfect for this. Here's how to use it.
 ### Option 1: NPX (Recommended)
 
 ```bash
-npx @ardf/mcp-server
+npx ardf-mcp-server
 ```
 
 ### Option 2: Global Install
 
 ```bash
-npm install -g @ardf/mcp-server
+npm install -g ardf-mcp-server
 ```
 
 ### Option 3: Claude Desktop Configuration
@@ -58,7 +58,7 @@ Add to your `claude_desktop_config.json`:
   "mcpServers": {
     "ardf": {
       "command": "npx",
-      "args": ["-y", "@ardf/mcp-server"]
+      "args": ["-y", "ardf-mcp-server"]
     }
   }
 }
@@ -296,7 +296,7 @@ Built with by the ARDF team.
 **Give Claude superpowers. Install ARDF MCP today.**
 
 ```bash
-npx @ardf/mcp-server
+npx ardf-mcp-server
 ```
 
 **Star us on GitHub if you find this useful!**

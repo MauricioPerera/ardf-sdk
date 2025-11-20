@@ -62,7 +62,7 @@ Features:
 ✅ Works with Claude Desktop
 
 Install in 30 seconds:
-npx @ardf/mcp-server
+npx ardf-mcp-server
 ```
 
 ### Tweet 6 (Use Cases)
@@ -93,7 +93,7 @@ vs Other MCPs:
 ```
 Try it now:
 
-1. Install: npx @ardf/mcp-server
+1. Install: npx ardf-mcp-server
 2. Add to Claude Desktop config
 3. Restart Claude
 4. Ask: "Find me a payment API"
@@ -138,7 +138,7 @@ All automatic. No manual research.
 ## Installation
 
 ```bash
-npx @ardf/mcp-server
+npx ardf-mcp-server
 ```
 
 Add to your `claude_desktop_config.json`:
@@ -148,7 +148,7 @@ Add to your `claude_desktop_config.json`:
   "mcpServers": {
     "ardf": {
       "command": "npx",
-      "args": ["-y", "@ardf/mcp-server"]
+      "args": ["-y", "ardf-mcp-server"]
     }
   }
 }
@@ -187,7 +187,7 @@ MIT License. Contributions welcome!
 
 ---
 
-**TL;DR**: MCP server that gives Claude semantic search over 100+ APIs. Install with `npx @ardf/mcp-server`, restart Claude, and start discovering tools with natural language.
+**TL;DR**: MCP server that gives Claude semantic search over 100+ APIs. Install with `npx ardf-mcp-server`, restart Claude, and start discovering tools with natural language.
 ```
 
 ---
@@ -240,7 +240,7 @@ Which pricing model works for you?
 ## Install
 
 ```bash
-npx @ardf/mcp-server
+npx ardf-mcp-server
 ```
 
 Add to Claude Desktop config, restart, done.
@@ -369,7 +369,7 @@ Would love feedback from the IH community!
 ---
 
 **Links:**
-- Install: `npx @ardf/mcp-server`
+- Install: `npx ardf-mcp-server`
 - GitHub: [link]
 - Website: http://31.220.22.176:3001/ardf
 ```
@@ -422,7 +422,7 @@ Built with Anthropic's Model Context Protocol (MCP), it works seamlessly with Cl
 
 Happy to answer any questions!
 
-Try it: npx @ardf/mcp-server
+Try it: npx ardf-mcp-server
 ```
 
 ---
@@ -447,7 +447,7 @@ Features:
 - Cost comparison (see pricing before committing)
 - Smart fallbacks (suggests alternatives if primary fails)
 
-Install: npx @ardf/mcp-server
+Install: npx ardf-mcp-server
 
 Tech stack: TypeScript, MCP SDK, ARDF marketplace backend (Hono + LibSQL + Ollama for embeddings).
 
@@ -472,7 +472,7 @@ Demo: [link to README examples]
 **0:10 - Install**
 [Screen recording]
 ```bash
-npx @ardf/mcp-server
+npx ardf-mcp-server
 ```
 
 **0:20 - Configure**
@@ -492,7 +492,7 @@ npx @ardf/mcp-server
 [Claude compares Stripe, PayPal, Square]
 
 **1:00 - CTA**
-"Install now: npx @ardf/mcp-server"
+"Install now: npx ardf-mcp-server"
 "Star on GitHub: [link]"
 
 ---
@@ -555,7 +555,7 @@ Just ask Claude: "I need to send emails" and get:
 
 Built with Anthropic's Model Context Protocol (MCP).
 
-Try it: npx @ardf/mcp-server
+Try it: npx ardf-mcp-server
 
 Open source. MIT license.
 

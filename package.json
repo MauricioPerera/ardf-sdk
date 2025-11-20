@@ -1,5 +1,5 @@
 {
-  "name": "@ardf/mcp-server",
+  "name": "ardf-mcp-server",
   "version": "1.0.0",
   "description": "MCP server for ARDF - Give Claude access to 100+ APIs through semantic search",
   "main": "dist/index.js",

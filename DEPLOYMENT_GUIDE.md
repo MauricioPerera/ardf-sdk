@@ -78,8 +78,8 @@ npm publish --access public
 
 ### After Publishing
 
-1. Verify on npm: https://www.npmjs.com/package/@ardf/mcp-server
-2. Test installation: `npx @ardf/mcp-server`
+1. Verify on npm: https://www.npmjs.com/package/ardf-mcp-server
+2. Test installation: `npx ardf-mcp-server`
 
 ## Step 5: Update URLs in Launch Materials
 
@@ -116,7 +116,7 @@ Update lines 253, 286:
 
    ### Installation
    ```bash
-   npx @ardf/mcp-server
+   npx ardf-mcp-server
    ```
 
    ### Quick Start
@@ -126,7 +126,7 @@ Update lines 253, 286:
      "mcpServers": {
        "ardf": {
          "command": "npx",
-         "args": ["-y", "@ardf/mcp-server"]
+         "args": ["-y", "ardf-mcp-server"]
        }
      }
    }
@@ -136,7 +136,7 @@ Update lines 253, 286:
 
    ### Links
    - [Documentation](https://github.com/MauricioPerera/ardf-sdk#readme)
-   - [npm Package](https://www.npmjs.com/package/@ardf/mcp-server)
+   - [npm Package](https://www.npmjs.com/package/ardf-mcp-server)
    - [Report Issues](https://github.com/MauricioPerera/ardf-sdk/issues)
    ```
 
@@ -148,7 +148,7 @@ Before launching publicly:
 - [ ] npm package published
 - [ ] GitHub release created
 - [ ] All URLs updated in documentation
-- [ ] Tested `npx @ardf/mcp-server` installation
+- [ ] Tested `npx ardf-mcp-server` installation
 - [ ] Tested with Claude Desktop
 - [ ] STRIPE_WEBHOOK_SECRET configured in production
 - [ ] Server running at http://31.220.22.176:3001
@@ -185,7 +185,7 @@ Post the launch announcement from LAUNCH.md
 
 Track:
 - GitHub stars
-- npm downloads: `npm info @ardf/mcp-server`
+- npm downloads: `npm info ardf-mcp-server`
 - Issues and feedback
 - User signups at http://31.220.22.176:3001/ardf
 
@@ -201,7 +201,7 @@ If `@ardf` scope is taken:
 ### "permission denied" when publishing
 
 1. Make sure you're logged in: `npm whoami`
-2. Check package name isn't taken: `npm info @ardf/mcp-server`
+2. Check package name isn't taken: `npm info ardf-mcp-server`
 3. Verify you have publish rights to the scope
 
 ### GitHub push fails
@@ -243,7 +243,7 @@ npm install -g ./ardf-mcp-server-1.0.0.tgz
 npm publish --access public
 
 # Check npm downloads
-npm info @ardf/mcp-server
+npm info ardf-mcp-server
 
 # View git log
 git log --oneline
