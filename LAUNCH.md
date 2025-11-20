@@ -179,7 +179,7 @@ Built on Anthropic's Model Context Protocol (MCP), the server connects Claude to
 
 - GitHub: https://github.com/MauricioPerera/ardf-sdk
 - Documentation: https://github.com/MauricioPerera/ardf-sdk#readme
-- Website: https://ideas.automators.work/ardf
+- Website: https://ardf.dev
 
 ## Open Source
 
@@ -371,7 +371,7 @@ Would love feedback from the IH community!
 **Links:**
 - Install: `npx ardf-mcp-server`
 - GitHub: https://github.com/MauricioPerera/ardf-sdk
-- Website: https://ideas.automators.work/ardf
+- Website: https://ardf.dev
 ```
 
 ---
@@ -533,7 +533,7 @@ Best,
 [Your Name]
 ARDF Team
 
-P.S. We already have 100+ APIs listed. You can see them at: https://ideas.automators.work/ardf
+P.S. We already have 100+ APIs listed. You can see them at: https://ardf.dev
 ```
 
 ---

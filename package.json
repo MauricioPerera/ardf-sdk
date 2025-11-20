@@ -1,6 +1,6 @@
 {
   "name": "ardf-mcp-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for ARDF - Give Claude access to 100+ APIs through semantic search",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,7 +29,7 @@
     "type": "git",
     "url": "https://github.com/MauricioPerera/ardf-sdk.git"
   },
-  "homepage": "https://github.com/MauricioPerera/ardf-sdk#readme",
+  "homepage": "https://ardf.dev",
   "bugs": {
     "url": "https://github.com/MauricioPerera/ardf-sdk/issues"
   },

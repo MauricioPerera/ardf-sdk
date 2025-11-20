@@ -280,8 +280,8 @@ npm run dev
 
 ## 🔗 Links
 
-- **ARDF Website**: [ardf.dev](https://ideas.automators.work/ardf)
-- **API Documentation**: [ardf.dev/docs](https://ideas.automators.work/ardf)
+- **ARDF Website**: [ardf.dev](https://ardf.dev)
+- **API Documentation**: [ardf.dev/docs](https://ardf.dev/docs)
 - **MCP Specification**: [modelcontextprotocol.io](https://modelcontextprotocol.io)
 - **Report Issues**: [GitHub Issues](https://github.com/MauricioPerera/ardf-sdk/issues)
 
