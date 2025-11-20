@@ -250,7 +250,7 @@ ARDF MCP is open-source and built with:
 Want to add more APIs? Contributions welcome!
 
 ```bash
-git clone https://github.com/yourusername/ardf-mcp-server.git
+git clone https://github.com/MauricioPerera/ardf-sdk.git
 cd ardf-mcp-server
 npm install
 npm run dev
@@ -280,10 +280,10 @@ npm run dev
 
 ## 🔗 Links
 
-- **ARDF Website**: [ardf.dev](http://31.220.22.176:3001/ardf)
-- **API Documentation**: [ardf.dev/docs](http://31.220.22.176:3001/ardf)
+- **ARDF Website**: [ardf.dev](https://ideas.automators.work/ardf)
+- **API Documentation**: [ardf.dev/docs](https://ideas.automators.work/ardf)
 - **MCP Specification**: [modelcontextprotocol.io](https://modelcontextprotocol.io)
-- **Report Issues**: [GitHub Issues](https://github.com/yourusername/ardf-mcp-server/issues)
+- **Report Issues**: [GitHub Issues](https://github.com/MauricioPerera/ardf-sdk/issues)
 
 ## 📜 License
 
