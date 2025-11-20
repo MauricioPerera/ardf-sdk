@@ -98,8 +98,8 @@ Try it now:
 3. Restart Claude
 4. Ask: "Find me a payment API"
 
-GitHub: [link]
-Docs: [link]
+GitHub: https://github.com/MauricioPerera/ardf-sdk
+Docs: https://github.com/MauricioPerera/ardf-sdk
 
 Retweet if you want Claude to have superpowers 🔁
 ```
@@ -177,9 +177,9 @@ Built on Anthropic's Model Context Protocol (MCP), the server connects Claude to
 
 ## Links
 
-- GitHub: [link when ready]
-- Documentation: [link to README]
-- Website: http://31.220.22.176:3001/ardf
+- GitHub: https://github.com/MauricioPerera/ardf-sdk
+- Documentation: https://github.com/MauricioPerera/ardf-sdk#readme
+- Website: https://ideas.automators.work/ardf
 
 ## Open Source
 
@@ -370,8 +370,8 @@ Would love feedback from the IH community!
 
 **Links:**
 - Install: `npx ardf-mcp-server`
-- GitHub: [link]
-- Website: http://31.220.22.176:3001/ardf
+- GitHub: https://github.com/MauricioPerera/ardf-sdk
+- Website: https://ideas.automators.work/ardf
 ```
 
 ---
@@ -493,7 +493,7 @@ npx ardf-mcp-server
 
 **1:00 - CTA**
 "Install now: npx ardf-mcp-server"
-"Star on GitHub: [link]"
+"Star on GitHub: https://github.com/MauricioPerera/ardf-sdk"
 
 ---
 
@@ -533,7 +533,7 @@ Best,
 [Your Name]
 ARDF Team
 
-P.S. We already have 100+ APIs listed. You can see them at: http://31.220.22.176:3001/ardf
+P.S. We already have 100+ APIs listed. You can see them at: https://ideas.automators.work/ardf
 ```
 
 ---
