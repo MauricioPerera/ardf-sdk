@@ -1,302 +1,496 @@
-# ARDF MCP Server
+# ARDF TypeScript SDK
 
-> **Give Claude access to 100+ APIs through semantic search**
+Official TypeScript/JavaScript SDK for the ARDF (AI Resource Discovery Framework) platform.
 
-A Model Context Protocol (MCP) server that connects Claude to the ARDF marketplace - enabling semantic discovery and execution of APIs, tools, and services using natural language.
+[![npm version](https://img.shields.io/npm/v/@ardf/sdk.svg)](https://www.npmjs.com/package/@ardf/sdk)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 🚀 What is this?
+## 🎯 What is ARDF?
 
-Instead of manually finding and configuring APIs, Claude can now:
+ARDF is a complete agent management platform that combines:
 
-```
-You: "Send a welcome email to new users"
-Claude: *uses discover_skills("send transactional emails")*
-Claude: "I found Resend Email API - it's perfect for this. Here's how to use it..."
-```
+- **Skills Marketplace** - Semantic search for AI tools, APIs, and resources
+- **Agent Management** - Create, manage, and execute AI agents with skills
+- **Secure Credential Vault** - AES-256-GCM encrypted credential storage
+- **Real-time Dashboard** - Monitor executions, success rates, and performance
 
-**Before ARDF MCP:**
-- You manually search for APIs
-- You read documentation
-- You write integration code
-- You handle errors and fallbacks
-
-**After ARDF MCP:**
-- Claude searches 100+ APIs semantically
-- Claude finds the right tool for your task
-- Claude provides ready-to-use code snippets
-- Claude suggests fallback options
-
-## ✨ Features
-
-- **Semantic Search**: Find APIs using natural language ("accept payments" → Stripe, PayPal, Square)
-- **100+ Verified APIs**: Email, SMS, payments, weather, maps, AI, and more
-- **Trust Scoring**: APIs ranked by reliability, uptime, and community validation
-- **Cost Transparency**: See pricing before you commit
-- **Smart Fallbacks**: Claude suggests alternatives if primary API fails
-- **Zero Config**: Works out of the box with Claude Desktop
-
-## 📦 Installation
-
-### Option 1: NPX (Recommended)
+## 🚀 Installation
 
 ```bash
-npx ardf-mcp-server
+npm install @ardf/sdk
+# or
+yarn add @ardf/sdk
+# or
+pnpm add @ardf/sdk
 ```
 
-### Option 2: Global Install
+## 📦 Quick Start
+
+```typescript
+import { ARDFClient } from '@ardf/sdk';
+
+// Initialize the client
+const client = new ARDFClient({
+  baseUrl: 'https://ardf.dev',
+  token: 'your-jwt-token' // Get this from /api/auth/login
+});
+
+// Discover skills by natural language
+const skills = await client.skills.discover('send transactional emails');
+
+console.log(`Found ${skills.results} skills:`);
+skills.skills?.forEach(skill => {
+  console.log(`- ${skill.name} (trust: ${skill.trust_score}/100)`);
+});
+```
+
+## 🔐 Authentication
+
+### Register a new user
+
+```typescript
+const result = await client.auth.register(
+  'user@example.com',
+  'username',
+  'SecurePassword123!'
+);
+```
+
+### Login and get token
+
+```typescript
+const loginResult = await client.auth.login(
+  'user@example.com',
+  'SecurePassword123!'
+);
+
+// Set the token for subsequent requests
+client.setToken(loginResult.token);
+```
+
+### Get current user info
+
+```typescript
+const user = await client.auth.me();
+console.log('Current user:', user.user);
+```
+
+### Check usage quota
+
+```typescript
+const quota = await client.auth.quota();
+console.log(`Quota: ${quota.quota_used}/${quota.quota_limit}`);
+```
+
+## 🔍 Skills Discovery
+
+### Basic semantic search
+
+```typescript
+// Simple discovery
+const skills = await client.skills.discover('process credit card payments');
+
+// With filters
+const skills = await client.skills.discover(
+  'send notifications',
+  {
+    budget: 'free_preferred',
+    reliability: 'high',
+    topK: 5
+  }
+);
+```
+
+### Parallel discovery (2-4x faster)
+
+```typescript
+const skills = await client.skills.discoverParallel(
+  'analyze sentiment in text',
+  {
+    topK: 3,
+    mergeStrategy: 'highest-confidence'
+  }
+);
+
+console.log(`Performance: ${skills.metadata?.speedup} speedup`);
+```
+
+### Browse skills by category
+
+```typescript
+const skills = await client.skills.list({
+  category: 'api',
+  verified: true,
+  minTrust: 80,
+  limit: 20
+});
+```
+
+### Get skill details
+
+```typescript
+const skill = await client.skills.get('resend-email-api');
+console.log('Skill:', skill.skill);
+```
+
+## 🤖 Agent Management
+
+### Create an agent
+
+```typescript
+const agent = await client.agents.create({
+  name: 'Email Bot',
+  description: 'Automated email sending agent',
+  framework: 'custom' // 'crewai' | 'langgraph' | 'autogen' | 'langchain' | 'custom'
+});
+```
+
+### List agents
+
+```typescript
+const agents = await client.agents.list('active');
+console.log(`Total agents: ${agents.total}`);
+```
+
+### Assign skills to agent
+
+```typescript
+// Assign a skill
+await client.agents.assignSkill(agentId, skillId, true);
+
+// Remove a skill
+await client.agents.removeSkill(agentId, skillId);
+
+// Toggle skill enabled/disabled
+await client.agents.toggleSkill(agentId, skillId, false);
+```
+
+### Execute a skill
+
+```typescript
+const execution = await client.agents.executeSkill(
+  agentId,
+  'resend-email-api', // skill slug
+  'send', // action
+  {
+    to: 'user@example.com',
+    subject: 'Welcome!',
+    html: '<h1>Hello</h1>'
+  }
+);
+
+console.log(`Status: ${execution.status}`);
+console.log(`Duration: ${execution.duration_ms}ms`);
+```
+
+### View execution history
+
+```typescript
+const executions = await client.agents.executions(agentId, {
+  limit: 10,
+  status: 'success'
+});
+
+console.log(`Total executions: ${executions.total}`);
+```
+
+## 🔐 Credential Management
+
+### Create encrypted credentials
+
+```typescript
+const credential = await client.credentials.create({
+  name: 'Stripe Production Key',
+  service: 'stripe',
+  type: 'api_key',
+  value: 'sk_live_xxxxxxxxxxxxx',
+  notes: 'Production key - expires 2025-12-31',
+  expiresAt: '2025-12-31T00:00:00Z'
+});
+
+console.log('Credential created:', credential.credential.name);
+// Note: value is encrypted and never returned in responses
+```
+
+### List credentials
+
+```typescript
+const credentials = await client.credentials.list();
+console.log(`Total credentials: ${credentials.total}`);
+// Values are never exposed in responses for security
+```
+
+### Assign credential to agent
+
+```typescript
+await client.agents.assignCredential(agentId, credentialId);
+```
+
+### Check expiring credentials
+
+```typescript
+const expiring = await client.credentials.expiring();
+console.log(`${expiring.count} credentials expiring within 30 days`);
+```
+
+### List supported services
+
+```typescript
+const services = await client.credentials.services();
+console.log('Supported services:', services.services);
+```
+
+## 📊 Dashboard & Analytics
+
+### Get dashboard metrics
+
+```typescript
+const metrics = await client.dashboard.metrics();
+
+console.log('Metrics:', {
+  totalExecutions: metrics.executions?.total,
+  successRate: metrics.success_rate,
+  activeAgents: metrics.active_agents
+});
+```
+
+### Get recent activity
+
+```typescript
+const activity = await client.dashboard.activity(10);
+console.log('Recent activity:', activity.activity);
+```
+
+### Get usage over time
+
+```typescript
+const usage = await client.dashboard.usageOverTime('week');
+console.log('Usage data:', usage.data);
+```
+
+### Get agent performance
+
+```typescript
+const performance = await client.dashboard.agentPerformance();
+console.log('Agent performance:', performance.agents);
+```
+
+## 📝 Publishing Skills
+
+### Publish a public skill
+
+```typescript
+const skill = await client.skills.publish({
+  name: 'My Email Service',
+  slug: 'my-email-service',
+  description: 'Custom email service integration',
+  category: 'api',
+  capabilities: ['email', 'transactional'],
+  pricingModel: 'freemium',
+  requiresCredentials: true,
+  requiredService: 'sendgrid',
+  visibilityType: 'public' // Requires admin verification
+});
+```
+
+### Publish a private skill
+
+```typescript
+const skill = await client.skills.publish({
+  name: 'Internal CRM',
+  slug: 'internal-crm',
+  description: 'Private CRM integration',
+  category: 'api',
+  capabilities: ['crm', 'contacts'],
+  pricingModel: 'free',
+  visibilityType: 'private' // Automatically verified, only visible to you
+});
+```
+
+### Update a skill
+
+```typescript
+await client.skills.update(skillId, {
+  description: 'Updated description',
+  capabilities: ['email', 'transactional', 'marketing'],
+  tags: ['communication', 'api'],
+  docsUrl: 'https://docs.example.com',
+  homepageUrl: 'https://example.com'
+});
+```
+
+### Delete a skill
+
+```typescript
+await client.skills.delete(skillId);
+```
+
+## 🛠️ Advanced Configuration
+
+### Custom base URL
+
+```typescript
+const client = new ARDFClient({
+  baseUrl: 'http://localhost:3001', // For development
+  token: 'your-token'
+});
+```
+
+### Request timeout
+
+```typescript
+const client = new ARDFClient({
+  baseUrl: 'https://ardf.dev',
+  token: 'your-token',
+  timeout: 60000 // 60 seconds
+});
+```
+
+### Update token dynamically
+
+```typescript
+client.setToken('new-jwt-token');
+```
+
+## 🔒 Security Features
+
+### Credential Encryption
+
+- All credential values are encrypted using **AES-256-GCM**
+- Unique initialization vector (IV) per credential
+- Values are **NEVER** exposed in API responses
+- Automatic decryption during skill execution only
+
+### Best Practices
+
+```typescript
+// Monitor expiring credentials
+const expiring = await client.credentials.expiring();
+if (expiring.count > 0) {
+  console.log('⚠️  You have expiring credentials!');
+  expiring.credentials?.forEach(cred => {
+    console.log(`- ${cred.name} expires on ${cred.expires_at}`);
+  });
+}
+
+// Rotate credentials regularly (every 90 days recommended)
+await client.credentials.update(credId, {
+  value: 'new-secure-key',
+  expiresAt: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString()
+});
+```
+
+## 📚 Examples
+
+Check out the [examples directory](./examples) for complete working examples:
+
+- **[01-quick-start.ts](./examples/01-quick-start.ts)** - Complete quick start guide
+- **[02-skill-discovery.ts](./examples/02-skill-discovery.ts)** - Advanced skill discovery
+- **[03-agent-execution.ts](./examples/03-agent-execution.ts)** - Agent skill execution
+- **[04-publish-skill.ts](./examples/04-publish-skill.ts)** - Publishing your own skills
+
+### Running examples
 
 ```bash
-npm install -g ardf-mcp-server
+# Set your token
+export ARDF_TOKEN="your-jwt-token"
+
+# Run an example
+npx tsx examples/01-quick-start.ts
 ```
 
-### Option 3: Claude Desktop Configuration
+## 🐛 Error Handling
 
-Add to your `claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "ardf": {
-      "command": "npx",
-      "args": ["-y", "ardf-mcp-server"]
-    }
+```typescript
+try {
+  const skills = await client.skills.discover('send email');
+} catch (error) {
+  if (error.status === 429) {
+    // Rate limit exceeded
+    console.log('Rate limit:', error.body.limit);
+    console.log('Resets at:', error.body.reset_at);
+  } else if (error.status === 401) {
+    // Unauthorized
+    console.log('Invalid or expired token');
+  } else if (error.status === 400) {
+    // Validation error
+    console.log('Validation errors:', error.body.details);
+  } else {
+    // Generic error
+    console.log('Error:', error.message);
   }
 }
 ```
 
-**Config file location:**
-- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+## 📖 API Documentation
 
-Restart Claude Desktop. Done!
+Full API documentation available at:
+- **Interactive Docs**: https://ardf.dev/api/docs
+- **OpenAPI Spec**: https://ardf.dev/openapi.json
 
-## 🎯 Usage Examples
+## 🤝 Support
 
-### Example 1: Send Emails
+- **Documentation**: https://ardf.dev/documentation.html
+- **GitHub Issues**: https://github.com/ardf/sdk/issues
+- **Email**: support@ardf.dev
 
-```
-You: I need to send password reset emails
-Claude: Let me find the best email API for you...
+## 📄 License
 
-*Claude uses discover_skills("send transactional emails")*
-
-Claude: I found Resend Email API (trust score: 95/100)
-- Pricing: Free up to 100 emails/day, then $20/month
-- Authentication: API Key
-- Here's a code snippet to send emails...
-```
-
-### Example 2: Accept Payments
-
-```
-You: How do I accept credit card payments?
-Claude: *uses discover_skills("accept credit card payments")*
-
-Claude: I found 3 options:
-1. Stripe Payment API (trust: 98/100) - $0.029 + 2.9% per transaction
-2. PayPal Checkout (trust: 95/100) - 2.9% + $0.30
-3. Square Payments (trust: 92/100) - 2.6% + $0.10
-
-Which pricing model works best for you?
-```
-
-### Example 3: Get Weather Data
-
-```
-You: I need weather forecast for users' locations
-Claude: *uses discover_skills("weather forecast API")*
-
-Claude: Found OpenWeatherMap API (verified)
-- Free tier: 1000 calls/day
-- Data: 5-day forecast, hourly updates
-- Here's how to integrate it...
-```
-
-## 🛠 Available Tools
-
-### `discover_skills`
-Search for APIs using natural language intent.
-
-```javascript
-// Claude uses this internally
-discover_skills({
-  intent: "send transactional emails",
-  limit: 5
-})
-
-// Returns top 5 most relevant APIs with:
-// - Name, description, capabilities
-// - Endpoint, authentication type
-// - Pricing, trust score, relevance score
-// - Quick start code snippets
-```
-
-### `get_skill_details`
-Get comprehensive info about a specific API.
-
-```javascript
-get_skill_details({
-  skill_id: "resend-email-api"
-})
-
-// Returns:
-// - Full documentation URL
-// - Authentication details
-// - Pricing breakdown
-// - Code examples (request/response)
-// - Uptime stats, ratings, usage count
-```
-
-### `list_skills`
-Browse all available APIs, optionally filtered.
-
-```javascript
-list_skills({
-  category: "api",
-  verified: true,
-  limit: 20
-})
-
-// Returns paginated list of skills
-// Useful for exploring what's available
-```
-
-## 🎬 Real-World Use Cases
-
-### Use Case 1: AI Agent Builder
-
-```
-You're building an AI agent that needs to:
-- Send SMS notifications (Claude finds Twilio)
-- Process payments (Claude finds Stripe)
-- Generate PDFs (Claude finds PDF.co)
-- Store files (Claude finds Cloudinary)
-
-Claude discovers all APIs in seconds using ARDF MCP.
-```
-
-### Use Case 2: No-Code Automation
-
-```
-You: Create a workflow that:
-1. Monitors GitHub issues
-2. Sends Slack notifications
-3. Creates Trello cards
-4. Emails the team
-
-Claude: *discovers 4 APIs semantically*
-Here's the complete integration code...
-```
-
-### Use Case 3: Rapid Prototyping
-
-```
-You: I need to prototype a fintech app
-Claude: *discovers payment, banking, KYC, fraud detection APIs*
-Here are the top 10 financial APIs ranked by trust score...
-```
-
-## 🔐 Environment Variables
-
-```bash
-# Optional: Custom ARDF API endpoint
-export ARDF_API_URL=https://your-ardf-instance.com
-
-# Default: http://127.0.0.1:3001 (local development)
-```
-
-## 📊 Architecture
-
-```
-┌─────────────┐
-│   Claude    │
-│  Desktop    │
-└──────┬──────┘
-       │ MCP Protocol
-       ▼
-┌─────────────┐
-│ ARDF MCP    │
-│   Server    │
-└──────┬──────┘
-       │ HTTP API
-       ▼
-┌─────────────┐
-│    ARDF     │
-│ Marketplace │  ─────► 100+ APIs
-│  (Semantic  │         (Email, SMS,
-│   Search)   │          Payment, etc)
-└─────────────┘
-```
-
-## 🆚 Comparison
-
-| Feature | ARDF MCP | Manual API Search | Zapier |
-|---------|----------|-------------------|--------|
-| **Semantic Search** | ✅ Natural language | ❌ Manual Google | ⚠️ Keyword only |
-| **Pricing** | 🎯 Free + pay-as-you-go | ❌ Per-API pricing | 💰 $99+/month |
-| **Setup Time** | ⚡ 30 seconds | 🐌 Hours per API | ⚠️ Minutes |
-| **Trust Scoring** | ✅ Automated | ❌ Manual research | ⚠️ Limited |
-| **Code Generation** | ✅ Via Claude | ❌ Manual coding | ❌ No-code only |
-| **Fallback Suggestions** | ✅ Automatic | ❌ Manual | ❌ None |
-| **Developer-First** | ✅ API + CLI | ⚠️ Varies | ❌ GUI only |
-
-## 🤝 Contributing
-
-ARDF MCP is open-source and built with:
-- **MCP SDK** by Anthropic
-- **TypeScript** for type safety
-- **Node.js** 18+ runtime
-
-Want to add more APIs? Contributions welcome!
-
-```bash
-git clone https://github.com/MauricioPerera/ardf-sdk.git
-cd ardf-mcp-server
-npm install
-npm run dev
-```
-
-## 📝 FAQ
-
-### Q: Is this free?
-
-**A:** The MCP server is 100% free and open-source. ARDF API has a free tier (100 discoveries/month). Premium plans available for heavy usage.
-
-### Q: Does this work with Claude.ai web?
-
-**A:** Currently MCP is only supported in Claude Desktop app. Web support coming from Anthropic soon.
-
-### Q: Can I add my own API to ARDF?
-
-**A:** Yes! Visit [ardf.dev/publish](https://ardf.dev/publish) to list your API. Free tier available.
-
-### Q: What if ARDF API is down?
-
-**A:** The MCP server will return clear error messages. You can also self-host ARDF API.
-
-### Q: Is my data secure?
-
-**A:** ARDF MCP only sends your semantic search queries to ARDF API. No API keys or sensitive data are transmitted.
+MIT License - see [LICENSE](../LICENSE) file for details
 
 ## 🔗 Links
 
-- **ARDF Website**: [ardf.dev](https://ardf.dev)
-- **API Documentation**: [ardf.dev/docs](https://ardf.dev/docs)
-- **MCP Specification**: [modelcontextprotocol.io](https://modelcontextprotocol.io)
-- **Report Issues**: [GitHub Issues](https://github.com/MauricioPerera/ardf-sdk/issues)
+- **Website**: https://ardf.dev
+- **Platform**: https://ardf.dev/ardf/dashboard.html
+- **API Docs**: https://ardf.dev/api/docs
+- **npm**: https://www.npmjs.com/package/@ardf/sdk
 
-## 📜 License
+## 🌟 Features
 
-MIT License - see [LICENSE](LICENSE) for details.
+- ✅ **Type-safe** - Full TypeScript support with auto-generated types
+- ✅ **Promise-based** - Modern async/await API
+- ✅ **Tree-shakeable** - Only bundle what you use
+- ✅ **Zero dependencies** - Lightweight and fast
+- ✅ **Rate limiting** - Built-in rate limit handling
+- ✅ **Error handling** - Comprehensive error types
+- ✅ **Cancellable requests** - Cancel in-flight requests
+- ✅ **Browser & Node.js** - Works everywhere JavaScript runs
 
-Built with by the ARDF team.
+## 🚦 Rate Limits
+
+- **Unauthenticated**: 100 discoveries/day, 10 executions/day
+- **Free tier**: Unlimited discoveries, 3 agents max
+- **Pro tier** ($29/mo): Unlimited discoveries, unlimited agents
+
+Check your quota:
+
+```typescript
+const quota = await client.auth.quota();
+console.log(`${quota.quota_remaining} of ${quota.quota_limit} remaining`);
+```
+
+## 🔄 Migration Guide
+
+### From direct API calls
+
+**Before:**
+```typescript
+const response = await fetch('https://ardf.dev/api/skills/discover', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+  body: JSON.stringify({ intent: 'send email' })
+});
+const data = await response.json();
+```
+
+**After:**
+```typescript
+const skills = await client.skills.discover('send email');
+```
 
 ---
 
-**Give Claude superpowers. Install ARDF MCP today.**
-
-```bash
-npx ardf-mcp-server
-```
-
-**Star us on GitHub if you find this useful!**
+Made with ❤️ by the ARDF team

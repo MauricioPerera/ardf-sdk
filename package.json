@@ -1,45 +1,70 @@
 {
-  "name": "ardf-mcp-server",
-  "version": "1.0.1",
-  "description": "MCP server for ARDF - Give Claude access to 100+ APIs through semantic search",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "bin": {
-    "ardf-mcp": "dist/index.js"
+  "name": "ardf-sdk",
+  "version": "1.0.0",
+  "description": "Official TypeScript SDK for the ARDF (AI Resource Discovery Framework) platform",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "start": "node dist/index.js",
-    "prepublish": "npm run build"
+    "build": "tsup index.ts client.ts --format cjs,esm --dts --clean",
+    "dev": "tsup index.ts client.ts --format cjs,esm --dts --watch",
+    "prepublishOnly": "npm run build",
+    "example:quick-start": "tsx examples/01-quick-start.ts",
+    "example:discovery": "tsx examples/02-skill-discovery.ts",
+    "example:execution": "tsx examples/03-agent-execution.ts",
+    "example:publish": "tsx examples/04-publish-skill.ts"
   },
   "keywords": [
-    "mcp",
-    "claude",
+    "ardf",
     "ai",
     "agent",
-    "api",
+    "agents",
+    "skills",
+    "marketplace",
+    "sdk",
+    "typescript",
+    "openapi",
+    "api-client",
+    "rag",
     "semantic-search",
-    "ardf",
-    "model-context-protocol"
+    "llm",
+    "credentials",
+    "vault",
+    "crewai",
+    "langgraph",
+    "langchain",
+    "autogen"
   ],
-  "author": "Mauricio Perera",
+  "author": "ARDF Team <support@ardf.dev>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MauricioPerera/ardf-sdk.git"
+    "url": "https://github.com/ardf/sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ardf/sdk/issues"
   },
   "homepage": "https://ardf.dev",
-  "bugs": {
-    "url": "https://github.com/MauricioPerera/ardf-sdk/issues"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.5.0",
-    "node-fetch": "^3.3.2"
+  "peerDependencies": {
+    "axios": "^1.13.2"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "typescript": "^5.3.0"
+    "@types/node": "^20.19.25",
+    "tsup": "^8.5.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=18.0.0"
