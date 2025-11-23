@@ -1,6 +1,6 @@
 {
   "name": "ardf-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Official TypeScript SDK for the ARDF (AI Resource Discovery Framework) platform",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -51,10 +51,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ardf/sdk.git"
+    "url": "https://github.com/MauricioPerera/ardf-sdk.git"
   },
   "bugs": {
-    "url": "https://github.com/ardf/sdk/issues"
+    "url": "https://github.com/MauricioPerera/ardf-sdk/issues"
   },
   "homepage": "https://ardf.dev",
   "peerDependencies": {

@@ -2,8 +2,10 @@
 
 Official TypeScript/JavaScript SDK for the ARDF (AI Resource Discovery Framework) platform.
 
-[![npm version](https://img.shields.io/npm/v/@ardf/sdk.svg)](https://www.npmjs.com/package/@ardf/sdk)
+[![npm version](https://img.shields.io/npm/v/ardf-sdk.svg)](https://www.npmjs.com/package/ardf-sdk)
+[![npm downloads](https://img.shields.io/npm/dm/ardf-sdk.svg)](https://www.npmjs.com/package/ardf-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/MauricioPerera/ardf-sdk.svg)](https://github.com/MauricioPerera/ardf-sdk)
 
 ## 🎯 What is ARDF?
 
@@ -17,17 +19,17 @@ ARDF is a complete agent management platform that combines:
 ## 🚀 Installation
 
 ```bash
-npm install @ardf/sdk
+npm install ardf-sdk
 # or
-yarn add @ardf/sdk
+yarn add ardf-sdk
 # or
-pnpm add @ardf/sdk
+pnpm add ardf-sdk
 ```
 
 ## 📦 Quick Start
 
 ```typescript
-import { ARDFClient } from '@ardf/sdk';
+import { ARDFClient } from 'ardf-sdk';
 
 // Initialize the client
 const client = new ARDFClient({
@@ -431,7 +433,8 @@ Full API documentation available at:
 ## 🤝 Support
 
 - **Documentation**: https://ardf.dev/documentation.html
-- **GitHub Issues**: https://github.com/ardf/sdk/issues
+- **GitHub**: https://github.com/MauricioPerera/ardf-sdk
+- **Issues**: https://github.com/MauricioPerera/ardf-sdk/issues
 - **Email**: support@ardf.dev
 
 ## 📄 License
@@ -443,7 +446,8 @@ MIT License - see [LICENSE](../LICENSE) file for details
 - **Website**: https://ardf.dev
 - **Platform**: https://ardf.dev/ardf/dashboard.html
 - **API Docs**: https://ardf.dev/api/docs
-- **npm**: https://www.npmjs.com/package/@ardf/sdk
+- **npm**: https://www.npmjs.com/package/ardf-sdk
+- **GitHub**: https://github.com/MauricioPerera/ardf-sdk
 
 ## 🌟 Features
 
